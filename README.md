@@ -34,13 +34,13 @@ Given a depth camera within the world and the model of an object of interest, it
 Example of usage:
 
 ```
-<plugin name="segmentation_camera" filename="librobots-plugins-segmentation-camera.so">                                                                                                   
-    <cameraSensorName>name of the depth sensor in the world </cameraSensorName>                                                                                                                                  
-    <cameraSensorFocal>focal length of the camera in pixels</cameraSensorFocal>                                                                                                                               
-    <cameraModelName>name of the model containing the camera</cameraModelName>                                                                                                                                             
-    <cameraLinkName>name of the link associated to the camera</cameraLinkName>                                                                                                                                            
-    <objectModelName>name of the model containing the object of interest</objectModelName>                                                                                                                                   
-    <objectMeshPath>path to the mesh used for the visual of the object</objectMeshPath>                                           
+<plugin name="segmentation_camera" filename="librobots-plugins-segmentation-camera.so">
+    <cameraSensorName>name of the depth sensor in the world </cameraSensorName>
+    <cameraSensorFocal>focal length of the camera in pixels</cameraSensorFocal>
+    <cameraModelName>name of the model containing the camera</cameraModelName>
+    <cameraLinkName>name of the link associated to the camera</cameraLinkName>
+    <objectModelName>name of the model containing the object of interest</objectModelName>
+    <objectMeshPath>path to the mesh used for the visual of the object</objectMeshPath>
  </plugin>
 ```
 > (the number of parameters will be reduced in following releases, since most of them should be available using `SDF` APIs)
