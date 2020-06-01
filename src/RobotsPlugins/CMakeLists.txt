@@ -9,3 +9,4 @@
 
 add_subdirectory(Utils)
 add_subdirectory(SegmentationCamera)
+add_subdirectory(ModelMover)
