@@ -13,7 +13,7 @@ A collection of plugins for Gazebo to experiment with perception and manipulatio
 
 ```
 git clone https://github.com/xenvre/robots-plugins.git
-cd robots-io
+cd robots-plugins
 mkdir build
 cd build
 cmake -DCMAKE_PREFIX_PATH=<installation_path> ../
