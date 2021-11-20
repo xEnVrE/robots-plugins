@@ -43,7 +43,7 @@ void ModelMover::Load(gazebo::physics::ModelPtr model, sdf::ElementPtr sdf)
     /* Initialize input port. */
     transform_ = std::unique_ptr<TransformYarpPort>
     (
-        new TransformYarpPort("/" + model_name_ + "/model-mover/pose:i")
+        new TransformYarpPort("/" + model_name_ + "/model-mover/pose:i", false)
     );
 
     /* Bind update callback . */
