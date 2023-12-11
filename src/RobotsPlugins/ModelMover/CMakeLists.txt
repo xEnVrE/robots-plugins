@@ -13,6 +13,8 @@ set(PLUGIN_TARGET_NAME robots-plugins-model-mover)
 #              COMPONENTS dev os math
 # )
 
+find_package(Eigen3 REQUIRED)
+
 find_package(GazeboYARPPlugins REQUIRED)
 
 find_package(Gazebo REQUIRED)
@@ -43,6 +45,7 @@ target_link_libraries(${PLUGIN_TARGET_NAME}
                       # YARP::YARP_dev
                       # YARP::YARP_math
                       # YARP::YARP_os
+                      Eigen3::Eigen
                       ${GAZEBO_LIBRARIES}
 )
 

@@ -7,14 +7,13 @@
 
 #include <ModelMover.h>
 
-#include <Eigen/Dense>
-
 #include <GazeboYarpPlugins/common.h>
 
 #include <RobotsPlugins/Utils/Utils.hpp>
 
 #include <boost/bind.hpp>
 
+#include <gazebo/physics/Link.hh>
 #include <gazebo/physics/Model.hh>
 #include <gazebo/common/Events.hh>
 
@@ -41,9 +40,15 @@ void ModelMover::Load(gazebo::physics::ModelPtr model, sdf::ElementPtr sdf)
     model_name_ = model_->GetName();
 
     /* Initialize input port. */
-    transform_ = std::unique_ptr<TransformYarpPort>
+    transform_in_ = std::make_unique<TransformYarpPort>
     (
-        new TransformYarpPort("/" + model_name_ + "/model-mover/pose:i", false)
+        "/" + model_name_ + "/model-mover/pose:i", false, false
+    );
+
+    /* Initialize output port. */
+    transform_out_ = std::make_unique<RobotsIO::Utils::YarpVectorOfProbe<double, Eigen::Transform<double, 3, Eigen::Affine>>>
+    (
+        "/" + model_name_ + "/model-mover/pose:o"
     );
 
     /* Bind update callback . */
@@ -54,11 +59,16 @@ void ModelMover::Load(gazebo::physics::ModelPtr model, sdf::ElementPtr sdf)
 
 void ModelMover::on_world_frame()
 {
+    auto world_pose = model_->WorldPose();
+    transform_out_storage_ = Eigen::Translation<double, 3>(world_pose.Pos().X(), world_pose.Pos().Y(), world_pose.Pos().Z());
+    transform_out_storage_.rotate(Eigen::Quaterniond(world_pose.Rot().W(), world_pose.Rot().X(), world_pose.Rot().Y(), world_pose.Rot().Z()));
+    transform_out_->set_data(transform_out_storage_);
+
     /* Get the pose from the input port. */
-    if (!transform_->freeze())
+    if (!transform_in_->freeze())
         return;
 
-    Eigen::Transform<double, 3, Affine> transform = transform_->transform();
+    Eigen::Transform<double, 3, Eigen::Affine> transform = transform_in_->transform();
 
 
     /* Set the pose .*/

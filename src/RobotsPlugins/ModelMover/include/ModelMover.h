@@ -9,8 +9,11 @@
 #define ROBOTSPLUGINS_MODELMOVER_H
 
 #include <RobotsIO/Utils/TransformYarpPort.h>
+#include <RobotsIO/Utils/YarpVectorOfProbe.hpp>
 
 #include <gazebo/common/Plugin.hh>
+
+#include <Eigen/Dense>
 
 #include <string>
 
@@ -39,7 +42,10 @@ private:
      * YARP Transform client.
      * FIXME: Extend support to ROS.
      */
-    std::unique_ptr<RobotsIO::Utils::TransformYarpPort> transform_;
+    std::unique_ptr<RobotsIO::Utils::TransformYarpPort> transform_in_;
+
+    std::unique_ptr<RobotsIO::Utils::YarpVectorOfProbe<double, Eigen::Transform<double, 3, Eigen::Affine>>> transform_out_;
+    Eigen::Transform<double, 3, Eigen::Affine> transform_out_storage_;
 
     /**
      * Pointer to the model
